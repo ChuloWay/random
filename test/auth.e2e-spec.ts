@@ -17,7 +17,7 @@ describe('Authentication System (e2e)', () => {
 
   it('handles a signup request', () => {
 
-    const email = 'test@test.com';
+    const email = 'test@demo.com';
 
     return request(app.getHttpServer())
       .post('/auth/signup')
@@ -32,4 +32,6 @@ describe('Authentication System (e2e)', () => {
         expect(email).toEqual(email)
       })
   });
+
+
 });
