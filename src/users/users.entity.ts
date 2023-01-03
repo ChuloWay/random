@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, AfterInsert, AfterUpdate, AfterRemove } from "typeorm";
+import { ReportEntity } from "src/reports/reports.entity";
+import { Entity, Column, PrimaryGeneratedColumn, AfterInsert, AfterUpdate, AfterRemove, OneToMany } from "typeorm";
 
 @Entity()
 export class UserEntity {
@@ -10,6 +11,10 @@ export class UserEntity {
 
     @Column()
     password: string;
+    
+    @OneToMany(()=> ReportEntity, (report)=> report.user)
+    reports: ReportEntity[];
+
 
     @AfterInsert()
     logInsert() {
@@ -25,5 +30,7 @@ export class UserEntity {
     logRemove() {
         console.log('Removed User with Id', this.id);
     }
+
+
 
 }
