@@ -17,25 +17,9 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
-      TypeOrmModule.forRootAsync({
-        inject: [ConfigService],
-        useFactory: (config: ConfigService)=> {
-          return {
-            type: 'sqlite',
-            database: config.get<string>('DB_NAME'),
-            synchronize: true,
-            entities: [UserEntity, ReportEntity]
-          }
-        }
-      })
-  //   TypeOrmModule.forRoot({
-  //   type: 'sqlite',
-  //   database: 'db.sqlite',
-  //   entities: [UserEntity, ReportEntity],
-  //   synchronize: true
-  // }),
-  ,
-  UsersModule, ReportsModule],
+    TypeOrmModule.forRoot()
+    ,
+    UsersModule, ReportsModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_PIPE,
@@ -45,10 +29,13 @@ const cookieSession = require('cookie-session');
   }],
 })
 export class AppModule {
+  constructor(
+    private configService: ConfigService
+  ) { }
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(
       cookieSession({
-        keys: ['qwerty']
+        keys: [this.configService.get('COOKIE_KEY')]
       })
     ).forRoutes('*');
   }
