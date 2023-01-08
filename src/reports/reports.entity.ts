@@ -1,5 +1,5 @@
-import { report } from "process";
 import { UserEntity } from "../users/users.entity";
+// const UserEntity = require('../users/users.entity')
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 @Entity()

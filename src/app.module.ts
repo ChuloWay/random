@@ -9,6 +9,7 @@ import { ReportsModule } from './reports/reports.module';
 import { UserEntity } from './users/users.entity';
 import { ReportEntity } from './reports/reports.entity';
 const cookieSession = require('cookie-session');
+const ormconfig = require('../ormconfig.js')
 
 
 @Module({
@@ -17,7 +18,7 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
-    TypeOrmModule.forRoot()
+    TypeOrmModule.forRoot(ormconfig)
     ,
     UsersModule, ReportsModule],
   controllers: [AppController],
